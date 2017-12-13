@@ -25,11 +25,11 @@ android {
       debuggable true
       zipAlignEnabled true
     }
-    release {
+    /*release {
       debuggable false
       zipAlignEnabled true
       signingConfig signingConfigs.release
-    }
+    }*/
   }
 }
 

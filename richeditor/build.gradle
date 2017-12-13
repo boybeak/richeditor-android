@@ -20,7 +20,9 @@ publish {
   publishVersion = VERSION_NAME
   desc = POM_DESCRIPTION
   website = POM_URL
-  bintrayUser = BINTRAY_USER
-  bintrayKey = BINTRAY_API_KEY
-  autoPublish = false
+  Properties properties = new Properties()
+  properties.load(project.rootProject.file('local.properties').newDataInputStream())
+  bintrayUser = properties.getProperty("bintray.user")
+  bintrayKey = properties.getProperty("bintray.apikey")
+  autoPublish = true
 }
