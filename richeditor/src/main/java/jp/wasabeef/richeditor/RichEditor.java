@@ -38,6 +38,8 @@ import java.util.Locale;
 
 public class RichEditor extends WebView {
 
+  private static final String TAG = RichEditor.class.getSimpleName();
+
   public enum Type {
     BOLD,
     ITALIC,
@@ -270,36 +272,48 @@ public class RichEditor extends WebView {
     exec("javascript:" + jsCSSImport + "");
   }
 
+  public void notifyState () {
+    exec("javascript:RE.enabledEditingItems();");
+  }
+
   public void undo() {
     exec("javascript:RE.undo();");
+    notifyState();
   }
 
   public void redo() {
     exec("javascript:RE.redo();");
+    notifyState();
   }
 
   public void setBold() {
     exec("javascript:RE.setBold();");
+    notifyState();
   }
 
   public void setItalic() {
     exec("javascript:RE.setItalic();");
+    notifyState();
   }
 
   public void setSubscript() {
     exec("javascript:RE.setSubscript();");
+    notifyState();
   }
 
   public void setSuperscript() {
     exec("javascript:RE.setSuperscript();");
+    notifyState();
   }
 
   public void setStrikeThrough() {
     exec("javascript:RE.setStrikeThrough();");
+    notifyState();
   }
 
   public void setUnderline() {
     exec("javascript:RE.setUnderline();");
+    notifyState();
   }
 
   public void setTextColor(int color) {
@@ -325,10 +339,12 @@ public class RichEditor extends WebView {
 
   public void removeFormat() {
     exec("javascript:RE.removeFormat();");
+    notifyState();
   }
 
   public void setHeading(int heading) {
     exec("javascript:RE.setHeading('" + heading + "');");
+    notifyState();
   }
 
   public void setIndent() {
@@ -341,14 +357,17 @@ public class RichEditor extends WebView {
 
   public void setAlignLeft() {
     exec("javascript:RE.setJustifyLeft();");
+    notifyState();
   }
 
   public void setAlignCenter() {
     exec("javascript:RE.setJustifyCenter();");
+    notifyState();
   }
 
   public void setAlignRight() {
     exec("javascript:RE.setJustifyRight();");
+    notifyState();
   }
 
   public void setBlockquote() {
@@ -429,9 +448,12 @@ public class RichEditor extends WebView {
       }
 
       if (TextUtils.indexOf(url, CALLBACK_SCHEME) == 0) {
+        Log.v(TAG, "1 = " + decode);
         callback(decode);
+        notifyState();
         return true;
       } else if (TextUtils.indexOf(url, STATE_SCHEME) == 0) {
+        Log.v(TAG, "2 = " + decode);
         stateCheck(decode);
         return true;
       }

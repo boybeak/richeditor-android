@@ -3,14 +3,20 @@ package jp.wasabeef.sample;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+
+import java.util.List;
+
 import jp.wasabeef.richeditor.RichEditor;
 
 public class MainActivity extends AppCompatActivity {
 
   private RichEditor mEditor;
   private TextView mPreview;
+
+  private static final String TAG = MainActivity.class.getSimpleName();
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -19,6 +25,12 @@ public class MainActivity extends AppCompatActivity {
     mEditor.setEditorHeight(200);
     mEditor.setEditorFontSize(22);
     mEditor.setEditorFontColor(Color.RED);
+    mEditor.setOnDecorationChangeListener(new RichEditor.OnDecorationStateListener() {
+      @Override
+      public void onStateChangeListener(String text, List<RichEditor.Type> types) {
+        Log.v(TAG, "onStateChangeListener " + types.size());
+      }
+    });
     //mEditor.setEditorBackgroundColor(Color.BLUE);
     //mEditor.setBackgroundColor(Color.BLUE);
     //mEditor.setBackgroundResource(R.drawable.bg);
